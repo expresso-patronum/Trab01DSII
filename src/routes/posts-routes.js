@@ -22,4 +22,8 @@ routes.get('/:id', postsController.detalhar);
 
 routes.post('/', postsController.cadastrar);
 
+routes.get('/deletar/:id', postsController.deletar);
+
+routes.post('/atualizar/:id', postsController.atualizar);
+
 module.exports = routes;

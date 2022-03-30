@@ -56,6 +56,7 @@ class PostsController {
         res.render('detalhar', {post: posts[index]});
     }
 
+
     async cadastrar(req, res) {
         console.log(`Cadastrando um post`);
         console.log({ body: req.body });
@@ -68,6 +69,23 @@ class PostsController {
            } else {
           res.send('Você não é administrador!');
         }
+    }
+    async atualizar(req, res) {
+    }
+    async deletar(req, res) {
+        const { id } = req.params;
+        // BUSCAR O FILME E REMOVER DO VETOR
+        console.log({posts})
+        if (req.session.user.tipo == 'admin') {
+        const postIdx = posts.findIndex(p => p.id == id);
+        posts.splice(postIdx, 1);
+        // FILTRAR O VETOR DE FILMES BASEADO NO ID != DO ID DA REMOÇÃO
+        // filmes = filmes.filter(f => f.id != id);
+        } else {
+            res.send('Você não é administrador!');
+        }
+        // BANCO - SQL COM DELETE WHERE
+        return res.redirect('/posts')
     }
 }
 

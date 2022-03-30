@@ -7,16 +7,19 @@
     @import url('https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap');
     </style>
 
+
 </head>
  
 <body>
 <!--Detalha um post-->
+<%-include('includes/navbar.ejs')%>
 
 <h1>Post: <%= post.titulo %></h1>
+<h2>Data de publicação: <%= post.data %></h2>
 <h2> <%= post.descricao %></h2>
 <p><%= post.conteudo%></p>
 <img src=<%= post.imagem %> alt="Minha Figura">
-
+<a href="/posts/deletar/<%= post.id %>">DELETAR</a>
 <!--Comentarios do post-->
 </body>
 </html>
