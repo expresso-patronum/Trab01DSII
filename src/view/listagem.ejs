@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%-include('includes/head.ejs')%>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap');
+</style>
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+  <%-include('includes/navbar.ejs')%>
+    <% if (user) { %>
+           
+        <h1>Bem vind@, <%= user.nome %>!</h1>
+        <h3>Clique <a href="/users/<%=user.id%>">aqui</a> para ver suas informações.</h3>
+      <% } %>
+      <br><br>
+      <h1>Posts do blog</h1>
+      <br>
+    <ul>
+        <% for (let i=0; i < posts.length ; i++) { %>
+        <li>
+            <a href="/posts/<%= posts[i].id %>">
+                <%= posts[i].titulo %>
+            </a>
+            <p><%= posts[i].descricao  %></p>
+            <br>
+        </li>
+        <% } %>
+    </ul>
+   
+<!--Lista de posts-->
+</body>
+</html>

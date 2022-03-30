@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+<%-include('includes/head.ejs')%>
+<link rel="stylesheet" href="/css/main.css">
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Didact+Gothic&display=swap');
+    </style>
+
+</head>
+ 
+<body>
+<!--Detalha um post-->
+
+<h1>Post: <%= post.titulo %></h1>
+<h2> <%= post.descricao %></h2>
+<p><%= post.conteudo%></p>
+<img src=<%= post.imagem %> alt="Minha Figura">
+
+<!--Comentarios do post-->
+</body>
+</html>
