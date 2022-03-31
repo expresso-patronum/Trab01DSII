@@ -24,6 +24,8 @@ routes.post('/', postsController.cadastrar);
 
 routes.get('/deletar/:id', postsController.deletar);
 
-routes.post('/atualizar/:id', postsController.atualizar);
+routes.put('/atualizar/:id', postsController.atualizar);
+
+routes.post('/comentario', postsController.cadastrarComentario);
 
 module.exports = routes;

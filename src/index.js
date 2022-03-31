@@ -14,11 +14,12 @@ app.use(express.urlencoded({
 app.use(express.json());
 
 const session = require('express-session');
+const oneDay = 1000 * 60 * 60 * 24;
 app.use(session({
     secret: 'chave secreta de criptografia',
     resave: false, // NAO SOBRESCREVER CASO NAO HAJA MODIFICAÇÕES,
     saveUninitialized: false,
-    cookie: { secure: false }
+    cookie: { secure: false }//, maxAge: oneDay 
 }))
 
 

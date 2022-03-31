@@ -17,6 +17,21 @@ let posts=[{
     
 }];
 
+let comentarios=[{
+    id: 1,
+    post: 1,
+    user: 1, 
+    conteudo: 'Meu conteudo',
+    data: '04/07/2003'
+},
+{
+    id: 2,
+    post: 2,
+    user: 1,
+    conteudo: 'Meu conteudo2',
+    data: '04/07/2003',
+}];
+
 const { nanoid } = require('nanoid');
 
 class PostsController {
@@ -51,9 +66,17 @@ class PostsController {
            index= i;
        }
         }
-       
 
-        res.render('detalhar', {post: posts[index]});
+        let comentariosDoPost=[];
+        for(let i=0; i<comentarios.length; i++){
+            console.log(comentarios[i].post)
+            console.log(posts[index].id)
+           if(comentarios[i].post ==posts[index].id){
+               comentariosDoPost.push(comentarios[i])
+           }
+        }
+
+        res.render('detalhar', {post: posts[index], comentarios:comentariosDoPost});
     }
 
 
@@ -71,6 +94,7 @@ class PostsController {
         }
     }
     async atualizar(req, res) {
+            
     }
     async deletar(req, res) {
         const { id } = req.params;
@@ -87,6 +111,26 @@ class PostsController {
         // BANCO - SQL COM DELETE WHERE
         return res.redirect('/posts')
     }
+
+    async cadastrarComentario(req, res){
+console.log(req.session.user)
+    }
+    async deletarComentario(req, res) {
+        const { id } = req.params;
+        // BUSCAR O FILME E REMOVER DO VETOR
+        let comentario = comentario.findIndex(c => c.id == id);
+        if (req.session.user.tipo == comentario.user ) {
+        const comentarioIdx = comentarios.findIndex(p => p.id == id);
+        comentarios.splice(comentarioIdx, 1);
+        // FILTRAR O VETOR DE FILMES BASEADO NO ID != DO ID DA REMOÇÃO
+        // filmes = filmes.filter(f => f.id != id);
+        } else {
+            res.send('Você  não fez esse comentário!');
+        }
+        // BANCO - SQL COM DELETE WHERE
+        return res.redirect('/posts')
+    }
+
 }
 
 module.exports = { PostsController }

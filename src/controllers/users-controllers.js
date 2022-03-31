@@ -1,5 +1,13 @@
 const users = [];
-const admins = [];
+console.log({users});
+const admins = [{
+    id:1,
+    nome: 'Adriele',
+    email: 'adriele@adriele',
+    senha: 'oioi',
+    tipo: 'admin'
+
+}];
 const { nanoid } = require('nanoid');
 
 class UsersController {
@@ -77,7 +85,6 @@ class UsersController {
         } else {
             return res.send('Senha nao confere...');
         }
-        
     }
 }
 
