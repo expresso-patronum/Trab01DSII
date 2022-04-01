@@ -1,5 +1,5 @@
 FALTA:
 
 -ATUALIZAR (CRUD DO POST)
--COMENTÁRIOS (CRUD?)
+-COMENTÁRIOS (cria e deleta junto com o post) //acho que não precisa de update
 -FILTROS DO POST; 
