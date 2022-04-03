@@ -19,6 +19,8 @@
 <h2> <%= post.descricao %></h2>
 <p><%= post.conteudo%></p>
 <img src=<%= post.imagem %> alt="Minha Figura">
+<a href="/posts/alterar/<%= post.id %>">ALTERAR</a>
+<a href="/posts/deletar/<%= post.id %>">DELETAR</a>
 <ul>
     <% for (let i=0; i < comentarios.length ; i++) { %>
     <li>

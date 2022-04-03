@@ -1,11 +1,39 @@
+
 <header>
-    <link rel="stylesheet" href="/css/main.css">
-    <nav>
-        <ul id="nav">
-            <li id="nav"><a href="/posts">POSTS</a></li>
-            <li id="nav"><a href="/login.html">LOGIN</a></li>
-            <li id="nav"><a href="/cadastro.html">CADASTRO</a></li>
-            <li id="nav"><a href="/posts/cadastrar">CADASTRAR POST</a></li>
-        </ul>
+    <nav class="navMenu">
+       
+            <a href="/posts">POSTS</a>
+            <a href="/login.html">LOGIN</a>
+            <a href="/cadastro.html">CADASTRO</a>
+            <a href="/posts/cadastrar">CADASTRAR POST</a>
     </nav>
 </header>
+
+<style>
+    @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
+
+.navMenu {
+  position: absolute;
+  top: 3%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.navMenu a {
+  color: #000;
+  text-decoration: none;
+  font-size: 1.2em;
+  text-transform: uppercase;
+  font-weight: 500;
+  
+  width: 80px;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+.navMenu a:hover {
+  color: rgb(151, 151, 151);
+}
+
+</style>

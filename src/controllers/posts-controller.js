@@ -32,12 +32,21 @@ let comentarios=[{
     data: '04/07/2003',
 }];
 
+console.log({posts});
+
 const { nanoid } = require('nanoid');
+
 
 class PostsController {
 
+
     async mostraCadastro(req, res) {
         return res.render('cadastrar');
+    }
+
+    async mostraAlterar(req, res) {
+        const { id } = req.params;
+        res.render('alterar', { post: posts })
     }
 
     async listar(req, res) {
@@ -93,9 +102,30 @@ class PostsController {
           res.send('Você não é administrador!');
         }
     }
-    async atualizar(req, res) {
-            
+
+
+
+
+
+    
+    async alterar(req, res) {
+        console.log({ body: req.body });
+        const { id } = req.params;
+        const { titulo, descricao, conteudo, imagem, data} = req.body;
+        const postIdx = posts.findIndex(p => p.id == id);
+       // posts[postIdx].id = id;
+        posts[postIdx].titulo = titulo;
+        posts[postIdx].descricao = descricao;
+        posts[postIdx].conteudo = conteudo;
+        posts[postIdx].imagem = imagem;
+        posts[postIdx].data = data;
+        res.redirect('/posts')
+       // res.render('alterar', {id: req.params});
     }
+
+
+
+
     async deletar(req, res) {
         const { id } = req.params;
         // BUSCAR O FILME E REMOVER DO VETOR

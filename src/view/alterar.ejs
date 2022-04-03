@@ -8,11 +8,15 @@
 </head>
 <body>
     <%-include('includes/navbar.ejs')%>
-<h1>Atualizar post</h1>
+<h1>Alterar post</h1>
 
-<form action="/posts" method="POST">
+
+
+
+<form action="/posts/alterar/<%= id %>" method="POST">
+ 
     <label for="titulo">Titulo</label>
-    <input type="text" name="titulo"> <br>
+    <input type="text" name="titulo" > <br>
 
     <label for="descricao">Descricao</label>
     <textarea id="descricao" name="descricao"></textarea><br>
@@ -25,8 +29,10 @@
 
     <label for="data">Data </label>
     <input type="date" name="data">
-    
- <input  type="submit">
+
+ <input  type="submit" value="Atualizar">
 </form>
+
 </body>
+
 </html>

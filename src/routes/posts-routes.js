@@ -24,7 +24,9 @@ routes.post('/', postsController.cadastrar);
 
 routes.get('/deletar/:id', postsController.deletar);
 
-routes.put('/atualizar/:id', postsController.atualizar);
+routes.get('/alterar/:id', postsController.mostraAlterar);
+
+routes.post('/alterar/:id', postsController.alterar);
 
 routes.post('/comentario', postsController.cadastrarComentario);
 

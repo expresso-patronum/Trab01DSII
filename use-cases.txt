@@ -1,5 +1,8 @@
 FALTA:
 
--ATUALIZAR (CRUD DO POST)
--COMENTÁRIOS (CRUD?)
+-ATUALIZAR (CRUD DO POST) // a parte do controller já tá feita e funciona 
+(eu testei tirando a parte do post.id para 1 e atualiza certinho o post), só precisa arrumar um jeito de passar o id pro
+post do alterar.ejs. ja tentei oq tu mandou do url mas não vai; acho q resolve com o modal
+
+-COMENTÁRIOS (CREATE E DELETE JUNTO COM POST)
 -FILTROS DO POST; 
