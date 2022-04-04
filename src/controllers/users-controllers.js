@@ -1,5 +1,4 @@
 const users = [];
-console.log({users});
 const admins = [{
     id:1,
     nome: 'Adriele',
@@ -27,7 +26,7 @@ class UsersController {
            }
            console.log({ users });
            console.log({ admins });
-           res.redirect('/')
+           res.redirect('/login.html')
     }
 
 
@@ -76,14 +75,15 @@ class UsersController {
           console.log('oi adm');
             usuarioEcontrado = admins.find(u=>u.email == email) 
        }
-        if (!usuarioEcontrado) return res.send('User nao encontrado');
+        if (!usuarioEcontrado) return res.send('Usuário não encontrado');
 
         // VERIFICAR A SENHA
         if (usuarioEcontrado.senha == senha) {
             req.session.user = usuarioEcontrado;
-            return res.send('Usuario e senha confirmados, vc fez o login');
+            return res.send('Login feito com sucesso!');
+            
         } else {
-            return res.send('Senha nao confere...');
+            return res.send('Senha não confere.');
         }
     }
 }

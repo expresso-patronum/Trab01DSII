@@ -4,7 +4,7 @@ let posts=[{
     descricao:'Minha descricao',
     conteudo: 'Meu conteudo',
     imagem: 'https://images.freeimages.com/images/large-previews/a31/colorful-umbrella-1176220.jpg',
-    data: '04/07/2003'
+    data: '2003-07-04'
     
 },
 {
@@ -13,7 +13,7 @@ let posts=[{
     descricao:'Minha descricao',
     conteudo: 'Meu conteudo',
     imagem: 'https://images.freeimages.com/images/large-previews/a31/colorful-umbrella-1176220.jpg',
-    data: '04/07/2003'
+    data: '2003-07-04'
     
 }];
 
@@ -44,10 +44,6 @@ class PostsController {
         return res.render('cadastrar');
     }
 
-    async mostraAlterar(req, res) {
-        const { id } = req.params;
-        res.render('alterar', { post: posts })
-    }
 
     async listar(req, res) {
         console.log('PAGINA INICIAL');
@@ -84,22 +80,22 @@ class PostsController {
                comentariosDoPost.push(comentarios[i])
            }
         }
-
-        res.render('detalhar', {post: posts[index], comentarios:comentariosDoPost});
+console.log(req.session.user)
+        res.render('detalhar', {post: posts[index], comentarios:comentariosDoPost, user: req.session.user});
     }
 
 
     async cadastrar(req, res) {
         console.log(`Cadastrando um post`);
         console.log({ body: req.body });
-        if(req.session.user.tipo == 'admin'){
+        if(req.session.user !== undefined && req.session.user.tipo == 'admin'){
             posts.push({
                id: nanoid(8),
             ...req.body
            });
             res.redirect('/posts');
            } else {
-          res.send('Você não é administrador!');
+          res.send('Você não é um administrador ou não está logado!');
         }
     }
 
@@ -109,18 +105,23 @@ class PostsController {
 
     
     async alterar(req, res) {
+        
         console.log({ body: req.body });
         const { id } = req.params;
         const { titulo, descricao, conteudo, imagem, data} = req.body;
         const postIdx = posts.findIndex(p => p.id == id);
        // posts[postIdx].id = id;
+       //if(req.session.user.tipo == 'admin'){
         posts[postIdx].titulo = titulo;
         posts[postIdx].descricao = descricao;
         posts[postIdx].conteudo = conteudo;
         posts[postIdx].imagem = imagem;
         posts[postIdx].data = data;
-        res.redirect('/posts')
-       // res.render('alterar', {id: req.params});
+        res.redirect('/posts');
+      // } else {
+        //res.send('Você não é administrador!');
+       //}
+       // res.render('alterar', {id: id});
     }
 
 
@@ -129,23 +130,38 @@ class PostsController {
     async deletar(req, res) {
         const { id } = req.params;
         // BUSCAR O FILME E REMOVER DO VETOR
-        console.log({posts})
-        if (req.session.user.tipo == 'admin') {
+        if (req.session.user !== undefined && req.session.user.tipo == 'admin') {
         const postIdx = posts.findIndex(p => p.id == id);
         posts.splice(postIdx, 1);
         // FILTRAR O VETOR DE FILMES BASEADO NO ID != DO ID DA REMOÇÃO
         // filmes = filmes.filter(f => f.id != id);
         } else {
-            res.send('Você não é administrador!');
+            res.send('Você não é um administrador ou não está logado!');
         }
         // BANCO - SQL COM DELETE WHERE
-        return res.redirect('/posts')
+    // res.redirect('/posts')
     }
 
     async cadastrarComentario(req, res){
+        console.log("AQUI COMEÇA O CADASTRAR COMENTARIO")
 console.log(req.session.user)
+const { id } = req.params;
+const comentariosIdx = comentarios.length
+const { post, conteudo } = req.body;
+let comentarioNovo = new Object();
+comentarioNovo.post = post;
+comentarioNovo.user = req.session.user;
+comentarioNovo.conteudo = conteudo;
+var today = new Date();
+var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+comentarioNovo.data = date;
+comentarios.push(comentarioNovo);
+//res.redirect('/posts');
+res.redirect('/posts');
     }
-    async deletarComentario(req, res) {
+
+
+   /* async deletarComentario(req, res) {
         const { id } = req.params;
         // BUSCAR O FILME E REMOVER DO VETOR
         let comentario = comentario.findIndex(c => c.id == id);
@@ -159,7 +175,7 @@ console.log(req.session.user)
         }
         // BANCO - SQL COM DELETE WHERE
         return res.redirect('/posts')
-    }
+    }*/
 
 }
 

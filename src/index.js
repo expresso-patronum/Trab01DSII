@@ -48,11 +48,10 @@ app.use('/posts', postsRoutes);
 const usersRoutes = require('./routes/users-routes');
 app.use('/users', usersRoutes);
 
-app.use('*', (req, res) => {
-    return res.status(404).send(`
-        <h1>Sorry, not found!!!</h1>
-        <a href="/posts">VOLTAR</a>
-    `);
-})
+app.use("*", (req, res, next)=>{
+
+    res.redirect('/erro.html');
+  
+ })
 
 app.listen(3000, () => console.log('Server iniciado na porta 3000'));

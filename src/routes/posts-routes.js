@@ -14,7 +14,7 @@ const routes = Router();
 
 const postsController = new PostsController();
 
-routes.get('/cadastrar', postsController.mostraCadastro);
+//routes.get('/cadastrar', postsController.mostraCadastro);
 
 routes.get('/', postsController.listar);
 
@@ -24,10 +24,11 @@ routes.post('/', postsController.cadastrar);
 
 routes.get('/deletar/:id', postsController.deletar);
 
-routes.get('/alterar/:id', postsController.mostraAlterar);
+//routes.get('/alterar/:id', postsController.mostraAlterar);
 
 routes.post('/alterar/:id', postsController.alterar);
 
-routes.post('/comentario', postsController.cadastrarComentario);
+routes.post('/cadastrarComentario', postsController.cadastrarComentario);
+//routes.post('/:id', postsController.cadastrarComentario);
 
 module.exports = routes;
