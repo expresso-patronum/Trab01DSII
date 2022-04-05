@@ -4,12 +4,12 @@ let posts=[{
     descricao:'Minha descricao',
     conteudo: 'Meu conteudo',
     imagem: 'https://images.freeimages.com/images/large-previews/a31/colorful-umbrella-1176220.jpg',
-    data: '2003-07-04'
+    data: '2003-07-07'
     
 },
 {
     id: 2,
-    titulo: 'Meu segundo post',
+    titulo: 'Aeu segundo post',
     descricao:'Minha descricao',
     conteudo: 'Meu conteudo',
     imagem: 'https://images.freeimages.com/images/large-previews/a31/colorful-umbrella-1176220.jpg',
@@ -44,6 +44,44 @@ class PostsController {
         return res.render('cadastrar');
     }
 
+        
+    async dataDesc(req, res) {
+        console.log('chegou aqui')
+        posts.sort(function (a, b) {
+            var c = new Date(a.data);
+            var d = new Date(b.data);
+            return d - c;
+        });
+        return res.redirect('/posts');
+    } 
+
+    async dataAsc(req, res) {
+        posts.sort(function (a, b) {
+            var c = new Date(a.data);
+            var d = new Date(b.data);
+            return c - d;
+        });
+        return res.redirect('/posts');
+    }
+
+    async tituloDesc(req, res) {
+        posts.sort(function(a, b){
+            if(a.titulo.toLowerCase() < b.titulo.toLowerCase()) { return 1; }
+            if(a.titulo.toLowerCase() > b.titulo.toLowerCase()) { return -1; }
+            return 0;
+        });
+        return res.redirect('/posts');
+    }
+
+    async tituloAsc(req, res) {
+        console.log({posts})
+        posts.sort(function(a, b){
+            if(a.titulo.toLowerCase() < b.titulo.toLowerCase()) { return -1; }
+            if(a.titulo.toLowerCase() > b.titulo.toLowerCase()) { return 1; }
+            return 0;
+        });
+        return res.redirect('/posts');
+    }
 
     async listar(req, res) {
         console.log('PAGINA INICIAL');
@@ -59,11 +97,12 @@ class PostsController {
         return res.render('listagem', { user: req.session.user, posts: posts });
     }
 
+    
 
     async detalhar(req, res){
         const {
             id
-        } = req.params
+        } = req.params;
         let index;
         for(let i=0; i<posts.length;i++){
             
@@ -74,15 +113,15 @@ class PostsController {
 
         let comentariosDoPost=[];
         for(let i=0; i<comentarios.length; i++){
-            console.log(comentarios[i].post)
-            console.log(posts[index].id)
-           if(comentarios[i].post ==posts[index].id){
+            //console.log(comentarios[i].post)
+            //console.log(posts[index].id)
+           if(comentarios[i].post == posts[index].id){
                comentariosDoPost.push(comentarios[i])
            }
         }
-console.log(req.session.user)
         res.render('detalhar', {post: posts[index], comentarios:comentariosDoPost, user: req.session.user});
     }
+    
 
 
     async cadastrar(req, res) {
@@ -98,11 +137,6 @@ console.log(req.session.user)
           res.send('Você não é um administrador ou não está logado!');
         }
     }
-
-
-
-
-
     
     async alterar(req, res) {
         
@@ -159,23 +193,6 @@ comentarios.push(comentarioNovo);
 //res.redirect('/posts');
 res.redirect('/posts');
     }
-
-
-   /* async deletarComentario(req, res) {
-        const { id } = req.params;
-        // BUSCAR O FILME E REMOVER DO VETOR
-        let comentario = comentario.findIndex(c => c.id == id);
-        if (req.session.user.tipo == comentario.user ) {
-        const comentarioIdx = comentarios.findIndex(p => p.id == id);
-        comentarios.splice(comentarioIdx, 1);
-        // FILTRAR O VETOR DE FILMES BASEADO NO ID != DO ID DA REMOÇÃO
-        // filmes = filmes.filter(f => f.id != id);
-        } else {
-            res.send('Você  não fez esse comentário!');
-        }
-        // BANCO - SQL COM DELETE WHERE
-        return res.redirect('/posts')
-    }*/
 
 }
 

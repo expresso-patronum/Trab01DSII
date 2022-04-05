@@ -14,9 +14,17 @@ const routes = Router();
 
 const postsController = new PostsController();
 
-//routes.get('/cadastrar', postsController.mostraCadastro);
+routes.get('/cadastrar', postsController.mostraCadastro);
 
 routes.get('/', postsController.listar);
+
+routes.get('/dataDesc', postsController.dataDesc);
+
+routes.get('/dataAsc', postsController.dataAsc);
+
+routes.get('/tituloDesc', postsController.tituloDesc);
+
+routes.get('/tituloAsc', postsController.tituloAsc);
 
 routes.get('/:id', postsController.detalhar);
 
@@ -27,6 +35,7 @@ routes.get('/deletar/:id', postsController.deletar);
 //routes.get('/alterar/:id', postsController.mostraAlterar);
 
 routes.post('/alterar/:id', postsController.alterar);
+
 
 routes.post('/cadastrarComentario', postsController.cadastrarComentario);
 //routes.post('/:id', postsController.cadastrarComentario);
