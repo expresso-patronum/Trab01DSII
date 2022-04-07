@@ -48,10 +48,14 @@ app.use('/posts', postsRoutes);
 const usersRoutes = require('./routes/users-routes');
 app.use('/users', usersRoutes);
 
+const comentariosRoutes = require('./routes/comentarios-routes');
+app.use('/comentarios', comentariosRoutes)
+
 app.use("*", (req, res, next)=>{
 
     res.redirect('/erro.html');
   
  })
+
 
 app.listen(3000, () => console.log('Server iniciado na porta 3000'));

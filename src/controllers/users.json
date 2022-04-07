@@ -1,0 +1,17 @@
+
+  [  
+    {
+    "id":3,
+    "nome": "User",
+    "email": "user@user",
+    "senha": "oioi",
+    "tipo": "user"
+    },
+{
+    "id":4,
+    "nome": "Usuário",
+    "email": "usuario@usuario",
+    "senha": "oioi",
+    "tipo": "user"
+
+} ]

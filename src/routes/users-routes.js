@@ -5,11 +5,15 @@ const routes = Router();
 
 const usersController = new UsersController();
 
+
 routes.post('/cadastrar', usersController.cadastrar);
+
+//routes.get('/logout', usersController.logout);
 
 routes.post('/login', usersController.login);
 
 routes.get('/:id', usersController.detalhar);
+
 
 
 module.exports = routes;

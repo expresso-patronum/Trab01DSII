@@ -1,85 +1,88 @@
-let posts=[{
-    id: 1,
-    titulo: 'Meu primeiro post',
-    descricao:'Minha descricao',
-    conteudo: 'Meu conteudo',
-    imagem: 'https://images.freeimages.com/images/large-previews/a31/colorful-umbrella-1176220.jpg',
-    data: '2003-07-07'
-    
-},
-{
-    id: 2,
-    titulo: 'Aeu segundo post',
-    descricao:'Minha descricao',
-    conteudo: 'Meu conteudo',
-    imagem: 'https://images.freeimages.com/images/large-previews/a31/colorful-umbrella-1176220.jpg',
-    data: '2003-07-04'
-    
-}];
 
-let comentarios=[{
-    id: 1,
-    post: 1,
-    user: 1, 
-    conteudo: 'Meu conteudo',
-    data: '04/07/2003'
-},
-{
-    id: 2,
-    post: 2,
-    user: 1,
-    conteudo: 'Meu conteudo2',
-    data: '04/07/2003',
-}];
-
-console.log({posts});
 
 const { nanoid } = require('nanoid');
 
+const path= require('path');
+const fs= require('fs');
+
+const filePathComentarios = path.join(__dirname,  'comentarios.json' );
+const comentarios=fs.readFileSync(filePathComentarios,'utf8');
+
+const filePathUsers = path.join(__dirname,  'users.json' );
+const users= fs.readFileSync(filePathUsers,'utf8');
+const filePathAdmins = path.join(__dirname,  'admins.json' );
+const admins=fs.readFileSync(filePathAdmins,'utf8');
+
 
 class PostsController {
-
-
     async mostraCadastro(req, res) {
         return res.render('cadastrar');
     }
 
         
     async dataDesc(req, res) {
-        console.log('chegou aqui')
+        const filePathPosts = path.join(__dirname,  'posts.json' );   
+        const posts = JSON.parse(fs.readFileSync(filePathPosts,'utf8'));
         posts.sort(function (a, b) {
             var c = new Date(a.data);
             var d = new Date(b.data);
             return d - c;
         });
+        fs.writeFile(filePathPosts, JSON.stringify(posts), function writeJSON(err) {
+            if (err) return console.log(err);
+            console.log(JSON.stringify(file));
+            console.log('writing to ' + fileName);
+          });
         return res.redirect('/posts');
     } 
 
     async dataAsc(req, res) {
+        const filePathPosts = path.join(__dirname,  'posts.json' );   
+        const posts = JSON.parse(fs.readFileSync(filePathPosts,'utf8'));
         posts.sort(function (a, b) {
             var c = new Date(a.data);
             var d = new Date(b.data);
             return c - d;
         });
+        fs.writeFile(filePathPosts, JSON.stringify(posts), function writeJSON(err) {
+            if (err) return console.log(err);
+            console.log(JSON.stringify(file));
+            console.log('writing to ' + fileName);
+          });
         return res.redirect('/posts');
     }
 
     async tituloDesc(req, res) {
+        
+        const filePathPosts = path.join(__dirname,  'posts.json' );   
+        const posts = JSON.parse(fs.readFileSync(filePathPosts,'utf8'));
         posts.sort(function(a, b){
             if(a.titulo.toLowerCase() < b.titulo.toLowerCase()) { return 1; }
             if(a.titulo.toLowerCase() > b.titulo.toLowerCase()) { return -1; }
             return 0;
         });
+        fs.writeFile(filePathPosts, JSON.stringify(posts), function writeJSON(err) {
+            if (err) return console.log(err);
+            console.log(JSON.stringify(file));
+            console.log('writing to ' + fileName);
+          });
         return res.redirect('/posts');
     }
 
     async tituloAsc(req, res) {
+        const filePathPosts = path.join(__dirname,  'posts.json' );   
+        const posts = JSON.parse(fs.readFileSync(filePathPosts,'utf8'));
         console.log({posts})
         posts.sort(function(a, b){
             if(a.titulo.toLowerCase() < b.titulo.toLowerCase()) { return -1; }
             if(a.titulo.toLowerCase() > b.titulo.toLowerCase()) { return 1; }
             return 0;
         });
+        fs.writeFile(filePathPosts, JSON.stringify(posts), function writeJSON(err) {
+  if (err) return console.log(err);
+  console.log(JSON.stringify(file));
+  console.log('writing to ' + fileName);
+});
         return res.redirect('/posts');
     }
 
@@ -94,23 +97,36 @@ class PostsController {
         // })
         
         // return res.send(html);
-        return res.render('listagem', { user: req.session.user, posts: posts });
+        const filePathPosts = path.join(__dirname,  'posts.json' );   
+         const posts = JSON.parse(fs.readFileSync(filePathPosts,'utf8'));
+    
+       return res.render('listagem', { user: req.session.user, posts: posts });
     }
 
     
 
     async detalhar(req, res){
+
         const {
             id
         } = req.params;
         let index;
+        const filePathPosts = path.join(__dirname,  'posts.json' );   
+        const posts = JSON.parse(fs.readFileSync(filePathPosts,'utf8'));
+        const filePathComentarios = path.join(__dirname,  'comentarios.json' );
+        const comentarios=JSON.parse(fs.readFileSync(filePathComentarios,'utf8'));
+        const filePathUsers = path.join(__dirname,  'users.json' );
+        const users=JSON.parse(fs.readFileSync(filePathUsers,'utf8'));
+        const filePathAdmins = path.join(__dirname,  'admins.json' );
+        const admins=JSON.parse(fs.readFileSync(filePathAdmins,'utf8'));
+   
         for(let i=0; i<posts.length;i++){
             
        if(posts[i].id== id){
            index= i;
        }
         }
-
+   
         let comentariosDoPost=[];
         for(let i=0; i<comentarios.length; i++){
             //console.log(comentarios[i].post)
@@ -119,7 +135,12 @@ class PostsController {
                comentariosDoPost.push(comentarios[i])
            }
         }
-        res.render('detalhar', {post: posts[index], comentarios:comentariosDoPost, user: req.session.user});
+        let usuariosQueComentaram=[]
+        for(let i2=0; i2<comentarios.length; i2++){
+            usuariosQueComentaram.push(comentarios[i2].user)
+        }
+    
+       res.render('detalhar', {post: posts[index], comentarios:comentariosDoPost, users: usuariosQueComentaram})
     }
     
 
@@ -127,22 +148,53 @@ class PostsController {
     async cadastrar(req, res) {
         console.log(`Cadastrando um post`);
         console.log({ body: req.body });
+        const filePathPosts = path.join(__dirname,  'posts.json' );   
+        const posts = JSON.parse(fs.readFileSync(filePathPosts,'utf8'));
         if(req.session.user !== undefined && req.session.user.tipo == 'admin'){
             posts.push({
                id: nanoid(8),
             ...req.body
            });
+           fs.writeFile(filePathPosts, JSON.stringify(posts), function writeJSON(err) {
+            if (err) return console.log(err);
+            console.log(JSON.stringify(file));
+            console.log('writing to ' + fileName);
+          });
             res.redirect('/posts');
            } else {
-          res.send('Você não é um administrador ou não está logado!');
+            res.render('erroPermissao');
         }
     }
     
+    async deletar(req, res) {
+        const { id } = req.params;
+        const filePathPosts = path.join(__dirname,  'posts.json' );   
+        const posts = JSON.parse(fs.readFileSync(filePathPosts,'utf8'));
+        // BUSCAR O FILME E REMOVER DO VETOR
+        console.log(req.session)
+        if(req.session.user !== undefined && req.session.user.tipo == 'admin'){
+        const postIdx = posts.findIndex(p => p.id == id);
+        posts.splice(postIdx, 1);
+        fs.writeFile(filePathPosts, JSON.stringify(posts), function writeJSON(err) {
+            if (err) return console.log(err);
+            console.log('writing to ' + fileName);
+          });
+        // FILTRAR O VETOR DE FILMES BASEADO NO ID != DO ID DA REMOÇÃO
+        // filmes = filmes.filter(f => f.id != id);
+        } else {
+            res.render('erroPermissao')
+            
+        }
+        // BANCO - SQL COM DELETE WHERE
+    // res.redirect('/posts')
+    }
+
     async alterar(req, res) {
-        
-        console.log({ body: req.body });
+        const filePathPosts = path.join(__dirname,  'posts.json' );   
+        const posts = JSON.parse(fs.readFileSync(filePathPosts,'utf8'));
         const { id } = req.params;
         const { titulo, descricao, conteudo, imagem, data} = req.body;
+        if(req.session.user !== undefined && req.session.user.tipo == 'admin'){
         const postIdx = posts.findIndex(p => p.id == id);
        // posts[postIdx].id = id;
        //if(req.session.user.tipo == 'admin'){
@@ -151,7 +203,13 @@ class PostsController {
         posts[postIdx].conteudo = conteudo;
         posts[postIdx].imagem = imagem;
         posts[postIdx].data = data;
+        fs.writeFile(filePathPosts, JSON.stringify(posts), function writeJSON(err) {
+            if (err) return console.log(err);
+          });
         res.redirect('/posts');
+        } else {
+            res.render('erroPermissao')
+        }
       // } else {
         //res.send('Você não é administrador!');
        //}
@@ -161,38 +219,8 @@ class PostsController {
 
 
 
-    async deletar(req, res) {
-        const { id } = req.params;
-        // BUSCAR O FILME E REMOVER DO VETOR
-        if (req.session.user !== undefined && req.session.user.tipo == 'admin') {
-        const postIdx = posts.findIndex(p => p.id == id);
-        posts.splice(postIdx, 1);
-        // FILTRAR O VETOR DE FILMES BASEADO NO ID != DO ID DA REMOÇÃO
-        // filmes = filmes.filter(f => f.id != id);
-        } else {
-            res.send('Você não é um administrador ou não está logado!');
-        }
-        // BANCO - SQL COM DELETE WHERE
-    // res.redirect('/posts')
-    }
+  
 
-    async cadastrarComentario(req, res){
-        console.log("AQUI COMEÇA O CADASTRAR COMENTARIO")
-console.log(req.session.user)
-const { id } = req.params;
-const comentariosIdx = comentarios.length
-const { post, conteudo } = req.body;
-let comentarioNovo = new Object();
-comentarioNovo.post = post;
-comentarioNovo.user = req.session.user;
-comentarioNovo.conteudo = conteudo;
-var today = new Date();
-var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-comentarioNovo.data = date;
-comentarios.push(comentarioNovo);
-//res.redirect('/posts');
-res.redirect('/posts');
-    }
 
 }
 
