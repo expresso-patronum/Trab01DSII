@@ -26,7 +26,8 @@ class ComentariosController {
             const { post, conteudo } = req.body;
             let comentarioNovo = new Object();
             comentarioNovo.post = post;
-            comentarioNovo.user = req.session.user;
+            comentarioNovo.nome = req.session.user.nome;
+            comentarioNovo.user = req.session.user.id;
             comentarioNovo.conteudo = conteudo;
             
             var today = new Date();
