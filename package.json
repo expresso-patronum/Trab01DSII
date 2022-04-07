@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/index.js --ignore *.json" "
+    "dev": "node src/index.js " 
   },
   "author": "Vini",
   "license": "ISC",

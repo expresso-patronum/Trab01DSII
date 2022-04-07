@@ -30,7 +30,7 @@ class UsersController {
 
     if (user.tipo == "user") {
       const filePathUsers = path.join(__dirname, "users.json");
-      const users = JSON.parse(fs.readFileSync(filePathUSers, "utf8"));
+      const users = JSON.parse(fs.readFileSync(filePathUsers, "utf8"));
       users.push({
         id: nanoid(8),
         ...user,
@@ -99,7 +99,7 @@ class UsersController {
     // ACHAR COM O EMAIL CERTO
     const { email, senha, tipo } = req.body;
     let usuarioEncontrado;
-    
+    if(tipo== "user"|| tipo=="admin"){
     if (tipo == "user") {
         const filePathUsers = path.join(__dirname, "users.json");
         const users = JSON.parse(fs.readFileSync(filePathUsers, "utf8"));
@@ -111,20 +111,26 @@ class UsersController {
       console.log("oi adm");
       usuarioEncontrado = admins.find((u) => u.email == email);
     }
+  
     if (!usuarioEncontrado) return res.send("Usuário não encontrado");
-console.log(usuarioEncontrado);
-    // VERIFICAR A SENHA
-    if (usuarioEncontrado.senha == senha) {
-      req.session.user = usuarioEncontrado;
-      res.redirect("/posts");
-    } else {
-      return res.send("Senha não confere.");
-    }
+    console.log(usuarioEncontrado);
+        // VERIFICAR A SENHA
+        if (usuarioEncontrado.senha == senha) {
+          req.session.user = usuarioEncontrado;
+          res.redirect("/posts");
+        } else {
+          return res.send("Senha não confere.");
+        }
+  } else{
+    return res.send("Volte e selecione o tipo de usuário.");
+  }
+    
   }
 
   async logout(req, res) {
+    console.log("Passei por aqui...");
     req.session.destroy();
-    res.redirect('/posts');
+    return res.redirect('/posts');
 }
 }
 

@@ -30,8 +30,6 @@ class PostsController {
         });
         fs.writeFile(filePathPosts, JSON.stringify(posts), function writeJSON(err) {
             if (err) return console.log(err);
-            console.log(JSON.stringify(file));
-            console.log('writing to ' + fileName);
           });
         return res.redirect('/posts');
     } 
@@ -46,8 +44,6 @@ class PostsController {
         });
         fs.writeFile(filePathPosts, JSON.stringify(posts), function writeJSON(err) {
             if (err) return console.log(err);
-            console.log(JSON.stringify(file));
-            console.log('writing to ' + fileName);
           });
         return res.redirect('/posts');
     }
@@ -63,8 +59,6 @@ class PostsController {
         });
         fs.writeFile(filePathPosts, JSON.stringify(posts), function writeJSON(err) {
             if (err) return console.log(err);
-            console.log(JSON.stringify(file));
-            console.log('writing to ' + fileName);
           });
         return res.redirect('/posts');
     }
@@ -80,8 +74,6 @@ class PostsController {
         });
         fs.writeFile(filePathPosts, JSON.stringify(posts), function writeJSON(err) {
   if (err) return console.log(err);
-  console.log(JSON.stringify(file));
-  console.log('writing to ' + fileName);
 });
         return res.redirect('/posts');
     }
@@ -157,8 +149,6 @@ class PostsController {
            });
            fs.writeFile(filePathPosts, JSON.stringify(posts), function writeJSON(err) {
             if (err) return console.log(err);
-            console.log(JSON.stringify(file));
-            console.log('writing to ' + fileName);
           });
             res.redirect('/posts');
            } else {
@@ -177,10 +167,10 @@ class PostsController {
         posts.splice(postIdx, 1);
         fs.writeFile(filePathPosts, JSON.stringify(posts), function writeJSON(err) {
             if (err) return console.log(err);
-            console.log('writing to ' + fileName);
           });
         // FILTRAR O VETOR DE FILMES BASEADO NO ID != DO ID DA REMOÇÃO
         // filmes = filmes.filter(f => f.id != id);
+        res.redirect('/posts')
         } else {
             res.render('erroPermissao')
             
