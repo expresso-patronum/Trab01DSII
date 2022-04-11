@@ -66,7 +66,7 @@ class PostsController {
     async tituloAsc(req, res) {
         const filePathPosts = path.join(__dirname,  'posts.json' );   
         const posts = JSON.parse(fs.readFileSync(filePathPosts,'utf8'));
-        console.log({posts})
+        
         posts.sort(function(a, b){
             if(a.titulo.toLowerCase() < b.titulo.toLowerCase()) { return -1; }
             if(a.titulo.toLowerCase() > b.titulo.toLowerCase()) { return 1; }
@@ -153,7 +153,7 @@ class PostsController {
         const filePathPosts = path.join(__dirname,  'posts.json' );   
         const posts = JSON.parse(fs.readFileSync(filePathPosts,'utf8'));
        
-        console.log(req.session)
+     
         if(req.session.user !== undefined && req.session.user.tipo == 'admin'){
         const postIdx = posts.findIndex(p => p.id == id);
         posts.splice(postIdx, 1);
