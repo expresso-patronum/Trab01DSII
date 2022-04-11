@@ -81,14 +81,7 @@ class PostsController {
     async listar(req, res) {
         console.log('PAGINA INICIAL');
         console.log({ session: req.session });
-        // LISTAGEM DE TODOS OS FILMES MOSTRANDO O NOME
-        // O NOME É CLICAVEL E REDIRECIONA PARA O DETALHAR DO FILME
-        // let html = '';
-        // filmes.forEach(filme => {
-        //     html += `<a href="/filmes/${filme.id}">${filme.nome}</a><br></br>`
-        // })
-        
-        // return res.send(html);
+
         const filePathPosts = path.join(__dirname,  'posts.json' );   
          const posts = JSON.parse(fs.readFileSync(filePathPosts,'utf8'));
     
@@ -121,8 +114,7 @@ class PostsController {
    
         let comentariosDoPost=[];
         for(let i=0; i<comentarios.length; i++){
-            //console.log(comentarios[i].post)
-            //console.log(posts[index].id)
+        
            if(comentarios[i].post == posts[index].id){
                comentariosDoPost.push(comentarios[i])
            }
@@ -160,7 +152,7 @@ class PostsController {
         const { id } = req.params;
         const filePathPosts = path.join(__dirname,  'posts.json' );   
         const posts = JSON.parse(fs.readFileSync(filePathPosts,'utf8'));
-        // BUSCAR O FILME E REMOVER DO VETOR
+       
         console.log(req.session)
         if(req.session.user !== undefined && req.session.user.tipo == 'admin'){
         const postIdx = posts.findIndex(p => p.id == id);
@@ -168,15 +160,13 @@ class PostsController {
         fs.writeFile(filePathPosts, JSON.stringify(posts), function writeJSON(err) {
             if (err) return console.log(err);
           });
-        // FILTRAR O VETOR DE FILMES BASEADO NO ID != DO ID DA REMOÇÃO
-        // filmes = filmes.filter(f => f.id != id);
+      
         res.redirect('/posts')
         } else {
             res.render('erroPermissao')
             
         }
-        // BANCO - SQL COM DELETE WHERE
-    // res.redirect('/posts')
+     
     }
 
     async alterar(req, res) {
@@ -186,8 +176,7 @@ class PostsController {
         const { titulo, descricao, conteudo, imagem, data} = req.body;
         if(req.session.user !== undefined && req.session.user.tipo == 'admin'){
         const postIdx = posts.findIndex(p => p.id == id);
-       // posts[postIdx].id = id;
-       //if(req.session.user.tipo == 'admin'){
+    
         posts[postIdx].titulo = titulo;
         posts[postIdx].descricao = descricao;
         posts[postIdx].conteudo = conteudo;
@@ -200,10 +189,7 @@ class PostsController {
         } else {
             res.render('erroPermissao')
         }
-      // } else {
-        //res.send('Você não é administrador!');
-       //}
-       // res.render('alterar', {id: id});
+ 
     }
 
 
